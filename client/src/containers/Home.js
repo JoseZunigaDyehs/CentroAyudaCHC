@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
+import Helmet from 'react-helmet'
 
 class Home extends Component {
 
@@ -11,9 +11,13 @@ class Home extends Component {
 
   render() {
     return (
-      <main>
-<h1>HOLAAA</h1>
-      </main >
+      <Helmet
+        title="Page title"
+       >
+        <main>
+          <h1>HOLAAA</h1>
+        </main >
+      </Helmet>
     )
   }
 }
