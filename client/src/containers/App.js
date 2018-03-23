@@ -3,16 +3,14 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import '../assets/css/style.css'
 import Home from './Home'
-import Nav from '../components/Nav'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import Nav from '../components/shared/Nav'
+import Footer from '../components/shared/Footer'
 
 const App = (props) => {
   return (
     <Router>
       <div>
         <Nav />
-        <Header/>
         <Route exact path='/' component={Home} />
         <Footer />
       </div>

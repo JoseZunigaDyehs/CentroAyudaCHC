@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Helmet from 'react-helmet'
+import HomeHeader from '../components/HomeHeader'
+import HomeManuales from '../components/HomeManuales'
+import TemasSugeridos from '../components/TemasSugeridos'
 
 class Home extends Component {
 
@@ -11,13 +14,15 @@ class Home extends Component {
 
   render() {
     return (
-      <Helmet
-        title="Page title"
-       >
+      <div>
+        <Helmet title="Hola soy german">
+        </Helmet>
+        <HomeHeader />
         <main>
-          <h1>HOLAAA</h1>
+          <HomeManuales />
+          <TemasSugeridos />
         </main >
-      </Helmet>
+      </div>
     )
   }
 }

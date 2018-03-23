@@ -1,7 +1,121 @@
-.bg-gris{
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+*:hover,
+*:active,
+*:focus,
+*:hover {
+  -webkit-transition: all 400ms ease;
+  transition: all 400ms ease;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+  font-weight: 300;
+}
+
+.bg-gris {
   background-color: #f5f7fa;
 }
 
-@media screen and (max-width: 550px) {
-  
+.bg-azul {
+  background-color: #152935;
 }
+
+.c-gris {
+  color: #f5f7fa;
+}
+
+.c-white {
+  color: #fff;
+}
+
+.c-blue {
+  color: #005fad;
+}
+
+.border-blue {
+  border: 2px solid #005fad;
+}
+
+.py-45 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.mb-45 {
+  margin-bottom: 2rem;
+}
+
+.f-w-500 {
+  font-weight: 500;
+}
+
+.w-20 {
+  width: 20%;
+}
+
+.btn-gra-red {
+  background: rgba(236, 73, 91, 1);
+  background: -moz-linear-gradient(left, rgba(236, 73, 91, 1) 0%, rgba(184, 91, 152, 1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(236, 73, 91, 1)), color-stop(100%, rgba(184, 91, 152, 1)));
+  background: -webkit-linear-gradient(left, rgba(236, 73, 91, 1) 0%, rgba(184, 91, 152, 1) 100%);
+  background: -o-linear-gradient(left, rgba(236, 73, 91, 1) 0%, rgba(184, 91, 152, 1) 100%);
+  background: -ms-linear-gradient(left, rgba(236, 73, 91, 1) 0%, rgba(184, 91, 152, 1) 100%);
+  background: linear-gradient(to right, rgba(236, 73, 91, 1) 0%, rgba(184, 91, 152, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ec495b', endColorstr='#b85b98', GradientType=1);
+}
+
+.btn-gra-blue {
+  background: rgba(0, 107, 177, 1);
+  background: -moz-linear-gradient(left, rgba(0, 107, 177, 1) 0%, rgba(0, 156, 196, 1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(0, 107, 177, 1)), color-stop(100%, rgba(0, 156, 196, 1)));
+  background: -webkit-linear-gradient(left, rgba(0, 107, 177, 1) 0%, rgba(0, 156, 196, 1) 100%);
+  background: -o-linear-gradient(left, rgba(0, 107, 177, 1) 0%, rgba(0, 156, 196, 1) 100%);
+  background: -ms-linear-gradient(left, rgba(0, 107, 177, 1) 0%, rgba(0, 156, 196, 1) 100%);
+  background: linear-gradient(to right, rgba(0, 107, 177, 1) 0%, rgba(0, 156, 196, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#006bb1', endColorstr='#009cc4', GradientType=1);
+}
+.btn-gra-red:hover {
+  cursor: pointer;
+  background: rgba(236, 73, 91, 1);
+  background: -moz-linear-gradient(left, rgba(184, 91, 152, 1) 0%, rgba(236, 73, 91, 1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(184, 91, 152, 1)), color-stop(100%, rgba(236, 73, 91, 1)));
+  background: -webkit-linear-gradient(left, rgba(184, 91, 152, 1) 0%, rgba(236, 73, 91, 1) 100%);
+  background: -o-linear-gradient(left, rgba(184, 91, 152, 1) 0%, rgba(236, 73, 91, 1) 100%);
+  background: -ms-linear-gradient(left, rgba(184, 91, 152, 1) 0%, rgba(236, 73, 91, 1) 100%);
+  background: linear-gradient(to right, rgba(184, 91, 152, 1) 0%, rgba(236, 73, 91, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ec495b', endColorstr='#b85b98', GradientType=1);
+}
+
+.btn-gra-blue:hover {
+  cursor: pointer;
+  background: rgba(0, 107, 177, 1);
+  background: -moz-linear-gradient(left, rgba(0, 156, 196, 1) 0%, rgba(0, 107, 177, 1) 100%);
+  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(0, 156, 196, 1)), color-stop(100%, rgba(0, 107, 177, 1)));
+  background: -webkit-linear-gradient(left, rgba(0, 156, 196, 1) 0%, rgba(0, 107, 177, 1) 100%);
+  background: -o-linear-gradient(left, rgba(0, 156, 196, 1) 0%, rgba(0, 107, 177, 1) 100%);
+  background: -ms-linear-gradient(left, rgba(0, 156, 196, 1) 0%, rgba(0, 076,1776, 1) 100%);
+  background: linear-gradient(to right, rgba(0, 156, 196, 1) 0%, rgba(0, 107, 177, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#006bb1', endColorstr='#009cc4', GradientType=1);
+}
+
+/*HOME*/
+
+.manuales-home {
+  height: 100px;
+  cursor: pointer;
+}
+
+.manuales-home:hover {
+  background-color: #005fad;
+  color: #fff;
+}
+
+@media screen and (max-width: 550px) {}
