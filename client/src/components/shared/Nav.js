@@ -1,13 +1,16 @@
 import React from 'react'
 import logo from '../../assets/img/LogoMP2.png'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 const Nav = () => (
   <nav className="navbar navbar-light bg-light justify-content-between py-4">
-    <a className="navbar-brand"><img src={logo} alt="" style={{'height':'44px'}}/></a>
-    <form className="form-inline">
-      <input className="form-control mr-sm-2" type="search" placeholder="Describr tu problema" aria-label="Search" />
-      {/* <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button> */}
-    </form>
+    <Link to ='/' className="navbar-brand"><img src={logo} alt="" style={{ 'height': '44px' }} /></Link>
+    <div className="input-group w-50">
+      <input type="text" className="form-control" placeholder="Busqueda" />
+      <div className="input-group-append">
+        <button className="btn btn-outline-secondary" type="button">Buscar</button>
+      </div>
+    </div>
   </nav>
 )
 

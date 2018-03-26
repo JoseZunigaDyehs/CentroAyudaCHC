@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Helmet from 'react-helmet'
-import HomeHeader from '../components/HomeHeader'
+import PanelHeader from '../components/PanelHeader'
 import ListaManuales from '../components/ListaManuales'
-import TemasSugeridos from '../components/TemasSugeridos'
 
-class Home extends Component {
+class PanelAdmin extends Component {
 
   componentWillMount() {
     document.body.scrollTop = 0;
@@ -15,12 +14,11 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <Helmet title="Home">
+        <Helmet title="Panel de administración">
         </Helmet>
-        <HomeHeader />
+        <PanelHeader />
         <main>
           <ListaManuales />
-          <TemasSugeridos />
         </main >
       </div>
     )
@@ -37,4 +35,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(PanelAdmin)

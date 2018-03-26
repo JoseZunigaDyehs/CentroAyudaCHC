@@ -20,12 +20,20 @@ h5 {
   font-weight: 300;
 }
 
+a{
+  color: #0667b4;
+}
+
 .bg-gris {
   background-color: #f5f7fa;
 }
 
 .bg-azul {
   background-color: #152935;
+}
+
+.bg-black{
+  background-color: #252525;
 }
 
 .c-gris {
@@ -40,8 +48,22 @@ h5 {
   color: #005fad;
 }
 
+.link-black{
+  color: black;
+  font-weight: 500;
+}
+
+.link-black:hover{
+  color: black;
+  text-decoration: none;
+}
+
 .border-blue {
-  border: 2px solid #005fad;
+  border: 1px solid #005fad;
+}
+
+.border-gris{
+  border: 1px solid #9da5a9;
 }
 
 .py-45 {
@@ -61,6 +83,17 @@ h5 {
   width: 20%;
 }
 
+.fnt-12{
+  font-size: 12px;
+}
+
+.l-s-1{
+  letter-spacing: 1px;
+}
+
+.c-pointer{
+  cursor: pointer;
+}
 .btn-gra-red {
   background: rgba(236, 73, 91, 1);
   background: -moz-linear-gradient(left, rgba(236, 73, 91, 1) 0%, rgba(184, 91, 152, 1) 100%);
@@ -117,5 +150,38 @@ h5 {
   background-color: #005fad;
   color: #fff;
 }
+
+.manuales-home-borrador{
+  height: 100px;
+  cursor: pointer;
+  background-color: #9da5a9;
+  color: #fff;
+}
+
+.manuales-home-borrador:hover{
+  background-color: #424546;
+}
+
+/* ARTICULO */
+aside.nav-articulo ul{
+  list-style: none;
+}
+
+.nav-articulo-hide > a{
+  margin-bottom: 0.5rem;
+  padding-left: 1rem;
+  border-left: 6px solid transparent;
+}
+
+.nav-articulo-hide > a:hover{
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.nav-articulo-hide > a.active{
+  border-left: 6px solid #0667b4;
+  font-weight: 700;
+}
+
 
 @media screen and (max-width: 550px) {}

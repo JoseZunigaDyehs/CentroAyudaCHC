@@ -8,7 +8,7 @@ const Mensaje = (props) => {
   }
   let link = '';
   if (props.props.link !== '') {
-    link = <a href='#'>{props.props.link}</a>
+    link = <a href='#!'>{props.props.link}</a>
   }
   let clase = props.props.clase + ' col-md-6'
 
@@ -43,6 +43,11 @@ const Footer = () => (
           link: '',
           clase: 'bg-azul c-gris'
         }} />
+    </div>
+    <div className='row bg-black justify-content-end py-5'>
+        <div className='col-4 c-gris fnt-12 l-s-1'>
+          <p className='f-w-500 '>DESARROLLO POR LA DIVISIÓN DE TECNOLOGÍA <br/>DE LA DIRECCIÓN DE COMPRAS PÚBLICAS</p>
+        </div>
     </div>
   </footer>
 )

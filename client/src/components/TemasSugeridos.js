@@ -20,10 +20,10 @@ const DivTemasSugeridos = () =>{
   return(
     <div className='col-md-4 d-flex flex-column'>
       <p className='f-w-500 mb-2'>Crear una licitación simplificada</p>
-      <a className='mb-2' href="#">Antecedentes generales de la licitación</a>
-      <a className='mb-2' href="#">Selección y descripción del producto o servicio</a>
-      <a className='mb-2' href="#">Cronograma de la licitación</a>
-      <a className='mb-2' href="#">Criterios de la evaluación</a>
+      <a className='mb-2' href="#!">Antecedentes generales de la licitación</a>
+      <a className='mb-2' href="#!">Selección y descripción del producto o servicio</a>
+      <a className='mb-2' href="#!">Cronograma de la licitación</a>
+      <a className='mb-2' href="#!">Criterios de la evaluación</a>
     </div>
   )
 }
