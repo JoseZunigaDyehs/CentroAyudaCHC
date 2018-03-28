@@ -1,4 +1,5 @@
 import React from 'react'
+import flecha from '../assets/img/arrow-white.svg'
 
 const HomeHeader = () => (
   <header className='container mt-5 pt-5'>
@@ -34,7 +35,7 @@ const Boton = (props) => {
           <h4 className='mb-2'>{props.props.title}</h4>
           <p>{props.props.small}</p>
         </div>
-        <i class="fas fa-arrow-right"></i>
+        <img src={flecha} alt="Ver más" style={{transform:'rotate(180deg)',height:'22px'}}/>
       </div>
     </div>
   )

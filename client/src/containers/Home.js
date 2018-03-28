@@ -4,10 +4,15 @@ import Helmet from 'react-helmet'
 import HomeHeader from '../components/HomeHeader'
 import ListaManuales from '../components/ListaManuales'
 import TemasSugeridos from '../components/TemasSugeridos'
+import axios from 'axios'
 
 class Home extends Component {
 
   componentWillMount() {
+    this.props.getManuales()
+  }
+
+  componentDidMount() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
   }
@@ -19,7 +24,7 @@ class Home extends Component {
         </Helmet>
         <HomeHeader />
         <main>
-          <ListaManuales />
+          <ListaManuales manuales={this.props.manuales}/>
           <TemasSugeridos />
         </main >
       </div>
@@ -29,11 +34,21 @@ class Home extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    manuales: state.manuales
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    getManuales: () => {
+      axios.get('http://10.0.1.1:8000/manuales/')
+        .then(res => {
+          dispatch({ type: 'GET_MANUALES', data: res.data.results })
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
   }
 }
 

@@ -2,7 +2,7 @@ import React from 'react'
 
 const TemasSugeridos = () => {
   return (
-    <section class='container'>
+    <section className='container'>
       <div className='row mb-5'>
         <div className='col-md-12'>
           <h4 className='f-w-500 mb-4'>Temas Sugeridos</h4>

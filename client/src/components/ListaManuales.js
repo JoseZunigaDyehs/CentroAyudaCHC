@@ -1,16 +1,16 @@
 import React from 'react'
 
-const ListaManuales = () => {
-  const manuales = [
-    { title: 'Plan Anual de Compras (PAC)', estado: 0 },
-    { title: 'Carro de Compras', estado: 1 },
-    { title: 'Mis Pagos', estado: 1 },
-    { title: 'Plan Anual de Compras (PAC)', estado: 0 },
-    { title: 'Carro de Compras', estado: 1 },
-    { title: 'Mis Pagos', estado: 1 },
-    { title: 'Plan Anual de Compras (PAC)', estado: 1 },
-    { title: 'Carro de Compras', estado: 1 }
-  ]
+const ListaManuales = (props) => {
+
+  let manuales;
+
+  if(props.manuales === null){
+    manuales = [
+      { title: '', estado: 0 }
+    ]
+  }else{
+    manuales = props.manuales
+  }
 
   const titulo = 'Manuales publicados'
   return (
@@ -50,16 +50,8 @@ const List = (props) => {
 
 const DivManual = (props) => {
   let clase = 'border-blue c-blue manuales-home d-flex align-items-center px-3'
-  //let clase = 'mr-2 border-blue c-blue manuales-home d-flex align-items-center px-3'
-  if (props.i % 5 === 0) {
-    clase = 'border-blue c-blue manuales-home d-flex align-items-center px-3'
-  }
-
   let estado = ''
-
-  //DEPENDE DEL ESTADO = 
   if(props.manual.estado===0){
-    //clase = 'mr-2 border-gris c-blue manuales-home-borrador d-flex align-items-start px-3 flex-column justify-content-center'
     clase = 'border-gris c-blue manuales-home-borrador d-flex align-items-start px-3 flex-column justify-content-center'
     if (props.i % 5 === 0) {
       clase = 'border-gris c-blue manuales-home-borrador d-flex align-items-start px-3 flex-column justify-content-center'
@@ -71,7 +63,7 @@ const DivManual = (props) => {
     <div className='col-md-3 mb-4'>
       <div className={clase}>
         <p>
-          {props.manual.title}
+          {props.manual.nombre}
         </p>
         {estado}
       </div>
