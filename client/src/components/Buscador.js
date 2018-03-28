@@ -2,11 +2,25 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import { BrowserRouter as Router, Link } from 'react-router-dom'
+import searchIcon from '../assets/img/search-grey.svg'
 
 class Buscador extends Component {
 
   componentWillMount() {
     this.props.getAllArticulos();
+  }
+
+  traerArticulo = (e) => {
+    setTimeout(() => {
+      let idArticulo = window.location.href.split('/')
+      if(idArticulo[idArticulo.length]==='/'){
+        idArticulo = idArticulo[idArticulo.length - 2]
+      }else{
+        idArticulo = idArticulo[idArticulo.length - 1]
+      }
+      idArticulo = parseInt(idArticulo)
+      this.props.getArticulo(idArticulo)
+    }, 10);
   }
 
   llenarResultados = (e) => {
@@ -17,12 +31,23 @@ class Buscador extends Component {
       articulos = art.filter((articulo) => {
         return articulo.nombre.toLowerCase().search(texto) !== -1;
       })
-      if(articulos.length>10){
-        articulos = articulos.slice(0,10)
+      if(articulos.length > 0){
+        if (articulos.length > 10) {
+          articulos = articulos.slice(0, 10)
+        }
+        this.props.setBusqueda(articulos)
+      }else{
+        this.props.clearBusqueda()
       }
-      this.props.setBusqueda(articulos)
     } else {
       this.props.clearBusqueda()
+      document.getElementsByClassName('buscador')['0'].value = ''
+    }
+  }
+
+  navegacionBuscador = (e) => {
+    if(e.key==='ArrowDown'){
+      document.getElementsByClassName('resultados-busqueda')['0'].children['0'].focus()
     }
   }
 
@@ -34,9 +59,9 @@ class Buscador extends Component {
       return (
         <div className='w-50 position-relative'>
           <div className="input-group w-100">
-            <input type="text" className="form-control buscador" placeholder="Describe tu problema" onKeyUp={this.llenarResultados.bind(this)} />
+            <input type="text" style={{backgroundImage:searchIcon}} className="form-control buscador" placeholder="Describe tu problema" onKeyDown={this.navegacionBuscador.bind(this)} onKeyUp={this.llenarResultados.bind(this)} />
+            <Resultados articulos={articulos} getArticulo={this.traerArticulo} />
           </div>
-          <Resultados articulos={articulos} clearBusqueda={this.props.clearBusqueda}/>
         </div>
       )
     } else {
@@ -56,6 +81,12 @@ class Buscador extends Component {
   }
 }
 
+const navegacionBuscador = (e) => {
+  if(e.key==='ArrowDown'){
+    document.getElementsByClassName('resultados-busqueda')['0'].children['0'].focus()
+  }
+}
+
 const Resultados = (props) => {
   return (
     <div className='resultados-busqueda d-flex flex-column'>
@@ -65,7 +96,7 @@ const Resultados = (props) => {
         let contenido = articulo.contenido
         contenido = contenido.substring(0, 30)
         return (
-          <Link key={i} to={url} className='d-flex align-items-center' onClick={props.clearBusqueda}>
+          <Link key={i} to={url} className='d-flex align-items-center' onClick={props.getArticulo} onKeyUp={(e) => navegacionBuscador(e)}>
             {articulo.nombre} - <p className='fnt-14 c-gris-osc ml-1'> {contenido}</p>
           </Link>
         )
@@ -82,7 +113,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     getAllArticulos: () => {
       axios.get('http://10.0.1.1:8000/articulos/')
@@ -98,7 +129,17 @@ const mapDispatchToProps = (dispatch) => {
     },
     clearBusqueda: () => {
       dispatch({ type: 'CLEAR_BUSQUEDA' })
-      document.getElementsByClassName('buscador')['0'].value = ''
+    },
+    getArticulo: (idArticulo) => {
+      axios.get(`http://10.0.1.1:8000/articulos/${idArticulo}/`)
+        .then(res => {
+          dispatch({ type: 'GET_ARTICULO', data: res.data })
+          dispatch({ type: 'CLEAR_BUSQUEDA' })
+          document.getElementsByClassName('buscador')['0'].value = '';
+        })
+        .catch(err => {
+          console.log(err);
+        })
     }
   }
 }

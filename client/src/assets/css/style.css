@@ -176,7 +176,10 @@ hr{
 
 /*HOME*/
 .buscador{
-  
+  background-image: url(/static/media/search-grey.eedbba8e.svg);
+  background-size: 3rem;
+  background-repeat: no-repeat;
+  background-position: 100%;
 }
 
 .resultados-busqueda{
@@ -184,17 +187,31 @@ hr{
   width: 100%;
   top: 45px;
   z-index: 100;
+  font-weight: 500;
+}
+.resultados-busqueda p{
+  font-weight: 500;
 }
 .resultados-busqueda a{
   background-color: #fff;
   border-bottom: 1px solid #4245465a;
   padding: 0.5rem 1.5rem;
+  -webkit-transition: all 100ms ease;
+  transition: all 100ms ease;
+  color: #19a397;
 }
-.resultados-busqueda a:hover{
-  background-color: #9da5a9;
+.resultados-busqueda a:hover,
+.resultados-busqueda a:focus{
+  background-color: #d6d6d6;
   cursor: pointer;
-  color: #fff;
+  color: #19a397;
   text-decoration: none;
+}
+
+.resultados-busqueda a:hover > p,
+.resultados-busqueda a:focus > p{
+  color: #565656;
+  font-weight: 700;
 }
 
 .manuales-home {

@@ -22,20 +22,15 @@ const Navegacion = () => {
   )
 }
 
-const ContenidoArticulo = () => {
-  const articulo = {
-    title: 'Integración de la Comisión Evaluadora'
-    , contenido: 'En la parte inferior, luego de los mecanismos de resolución de empates, el sistema propone una cláusula de designación de la comisión evaluadora, la cual puede ser utilizada o no, si correspondiera. Nótese que el texto está en fundo blanco, ello nos indica que puede ser completamente editada.'
-    , date: '23/02/2018'
-  }
-
+const ContenidoArticulo = (props) => {
+  debugger
   return (
     <div className='col-md-8 mb-5 pb-4'>
       <article className='mb-4'>
-        <h3 className='f-w-500'>{articulo.title}</h3>
+        <h3 className='f-w-500'>{props.articulo.nombre}</h3>
         <hr />
-        <p className='mb-4'>{articulo.contenido}</p>
-        <p className='fnt-14 c-gris-osc'>Fecha de publicación: {articulo.date}</p>
+        <p className='mb-4'>{props.articulo.contenido}</p>
+        <p className='fnt-14 c-gris-osc'>Fecha de publicación: {props.articulo.creacion}</p>
       </article>
       <hr/>
       <InfoUtil />

@@ -20,6 +20,9 @@ const abrirNav = (e) => {
 }
 
 const AsideArticle = () => {
+
+  
+
   return (
     <aside className='col-md-4 nav-articulo'>
       <h5 className='f-w-500' style={{paddingBottom:'9px'}}>Licitación Simplificada L1</h5>
