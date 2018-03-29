@@ -31,7 +31,7 @@ const CrearManual = () => {
       <Header />
       <main>
         <CrearEditarManual estado='crear' />
-        <Seccion />
+        <Seccion estado='crear'/>
       </main>
     </div>
   )

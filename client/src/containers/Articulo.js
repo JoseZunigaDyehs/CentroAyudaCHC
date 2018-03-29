@@ -72,6 +72,8 @@ class Articulo extends Component {
   componentDidMount() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
+  }
+  componentWillMount(){
     this.props.getArticulo();
   }
 
@@ -85,6 +87,14 @@ class Articulo extends Component {
     if(this.props.articulo!==null){
       articulo = this.props.articulo
       articulo.creacion = fechaCorrecta(articulo.creacion)
+      let idManual = this.props.articulo.manual;
+      if(this.props.manual===null){
+        this.props.getManual(idManual)//ID MANUAL
+      }else{
+        if(this.props.manual.pk !== idManual){
+          this.props.getManual(idManual)//ID MANUAL
+        }
+      }
     }
 
     return (
@@ -94,7 +104,7 @@ class Articulo extends Component {
           <Volver />
           <div className='container'>
             <div className='row'>
-              <AsideArticulo />
+              <AsideArticulo manual={this.props.manual}/>
               <ContenidoArticulo articulo={articulo}/>
             </div>
           </div>
@@ -105,9 +115,9 @@ class Articulo extends Component {
 }
 
 const mapStateToProps = (state) => {
-  debugger
   return {
-    articulo: state.articulo
+    articulo: state.articulo,
+    manual: state.manual
   }
 }
 
@@ -115,7 +125,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     getArticulo: () => {
       const idArticulo = parseInt(ownProps.match.params.id)
-      axios.get(`http://10.0.1.1:8000/articulos/${idArticulo}/`)
+      axios.get(`http://10.0.1.1:8000/articulo/${idArticulo}/`)
       .then(res => {
         dispatch({type:'GET_ARTICULO',data:res.data})
       })
@@ -125,6 +135,19 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     clearArticulo: () => {
       dispatch({type:'CLEAR_ARTICULO'})
+    },
+    getManual: (idManual) => {
+      debugger;
+      axios.get(`http://10.0.1.1:8000/manual/${idManual}/`)
+      .then(res => {
+        dispatch({type:'GET_MANUAL',data:res.data})
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    },
+    clearManual: () => {
+      dispatch({type:'CLEAR_MANUAL'})
     }
   }
 }
