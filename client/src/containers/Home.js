@@ -41,7 +41,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getManuales: () => {
-      axios.get('http://10.0.1.1:8000/manuales/')
+      axios.get('http://10.0.1.1:8000/manuales-publicados/')
         .then(res => {
           dispatch({ type: 'GET_MANUALES', data: res.data.results })
         })

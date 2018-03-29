@@ -10,7 +10,7 @@ class Buscador extends Component {
     this.props.getAllArticulos();
   }
 
-  traerArticulo = (e) => {
+  traerArticulo = (e) => {//por URL window.LOCATION
     setTimeout(() => {
       let idArticulo = window.location.href.split('/')
       if(idArticulo[idArticulo.length]==='/'){
@@ -131,7 +131,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch({ type: 'CLEAR_BUSQUEDA' })
     },
     getArticulo: (idArticulo) => {
-      axios.get(`http://10.0.1.1:8000/articulos/${idArticulo}/`)
+      axios.get(`http://10.0.1.1:8000/articulo/${idArticulo}/`)
         .then(res => {
           dispatch({ type: 'GET_ARTICULO', data: res.data })
           dispatch({ type: 'CLEAR_BUSQUEDA' })
