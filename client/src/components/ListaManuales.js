@@ -53,9 +53,6 @@ const DivManual = (props) => {
   let estado = ''
   if(props.manual.estado===0){
     clase = 'border-gris c-blue manuales-home-borrador d-flex align-items-start px-3 flex-column justify-content-center'
-    if (props.i % 5 === 0) {
-      clase = 'border-gris c-blue manuales-home-borrador d-flex align-items-start px-3 flex-column justify-content-center'
-    }
     estado = <p className='fnt-12 f-w-500 mt-2 l-s-1'>BORRADOR</p>
   }
 

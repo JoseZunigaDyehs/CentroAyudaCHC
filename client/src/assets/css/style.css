@@ -52,6 +52,10 @@ a {
   color: #005fad;
 }
 
+.c-verde{
+  color: #19a397;
+}
+
 .link-black {
   color: black;
   font-weight: 500;
@@ -97,6 +101,10 @@ a {
 
 .fnt-14 {
   font-size: 14px;
+}
+
+.fnt-24{
+  font-size: 24px;
 }
 
 .l-s-1 {

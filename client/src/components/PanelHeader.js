@@ -13,7 +13,7 @@ const PanelHeader = () => (
     <div className='row'>
       <Boton props={{
         title: 'Crear Nuevo Manual',
-        link: '/articulo/123',
+        link: '/crear/manual/',
         clase: 'btn-gra-blue'
       }} />
     </div>

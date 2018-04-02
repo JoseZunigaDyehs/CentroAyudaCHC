@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <header>
       <div className='container-fluid py-4'>
-        <div class='row pl-3'>
+        <div className='row pl-3'>
           <VolverBtn />
         </div>
       </div>

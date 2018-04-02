@@ -1,14 +1,14 @@
 import React from 'react'
 import VolverBtn from '../components/shared/VolverBtn'
 import CrearEditarManual from '../components/CrearEditarManual'
-import Seccion from '../components/Seccion';
+import Seccion from '../components/Seccion'
 
 
 const Header = () => {
   return (
     <header>
       <div className='container-fluid py-4'>
-        <div class='row pl-3'>
+        <div className='row pl-3'>
           <VolverBtn />
         </div>
       </div>
@@ -31,7 +31,7 @@ const EditarManual = () => {
       <Header />
       <main>
         <CrearEditarManual estado='editar' manual={{}}/>
-        <Seccion />
+        <Seccion estado='editar'/>
       </main>
     </div>
   )

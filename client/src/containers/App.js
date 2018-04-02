@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
+import 'bootstrap/dist/css/bootstrap.css'
 import '../assets/css/style.css'
 import Home from './Home'
 import PanelAdmin from './PanelAdmin'

@@ -4,17 +4,26 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import { BrowserRouter as Router, Link } from 'react-router-dom'
 
-const InfoUtil = () => {
-  return (
-    <div className='py-3'>
-      <p>¿Fue útil esta información?</p>
-      <div className='my-3'>
-        <button className='btn btn-ter mr-3'>Si</button>
-        <button className='btn btn-ter'>No</button>
+const InfoUtil = (props) => {
+  if (props.estadisticas === undefined) {
+    return (
+      <div></div>
+    )
+  } else {
+    let total = (props.estadisticas.si + props.estadisticas.no)
+    let porc = ((props.estadisticas.si * 100) / total).toFixed(0)
+    return (
+      <div className='py-3'>
+            <hr className='pt-3'/>
+        <p>¿Fue útil esta información?</p>
+        <div className='my-3'>
+          <button className='btn btn-ter mr-3'>Si</button>
+          <button className='btn btn-ter'>No</button>
+        </div>
+        <p className='c-gris-osc fnt-14'>{porc}% de las personas consideraron que fue útil.</p>
       </div>
-      <p className='c-gris-osc fnt-14'>46% de las personas consideraron que fue útil.</p>
-    </div>
-  )
+    )
+  }
 }
 
 const obtenerAnterior = (idArticulo, secciones, traerArticulo, getArticulo) => {
@@ -94,15 +103,14 @@ const ContenidoArticulo = (props) => {
 
   return (
     <div className='col-md-8 mb-5 pb-4'>
-      <Helmet title={props.articulo.nombre + ' - Mercado Público'}></Helmet>
-      <article className='mb-4'>
+      <Helmet title={props.articulo.nombre + ' - Manuales Mercado Público'}></Helmet>
+      <article>
         <h3 className='f-w-500'>{props.articulo.nombre}</h3>
         <hr />
         <p className='mb-4'>{props.articulo.contenido}</p>
         <p className='fnt-14 c-gris-osc'>Fecha de publicación: {props.articulo.creacion}</p>
       </article>
-      <hr />
-      <InfoUtil />
+      <InfoUtil estadisticas={{si:3,no:9}}/>
       <hr />
       <Navegacion manual={props.manual} idArticulo={props.articulo.pk} traerArticulo={traerArticulo} getArticulo={props.getArticulo} />
     </div>

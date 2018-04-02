@@ -20,7 +20,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <Helmet title="Home">
+        <Helmet title="Home - Manuales Mercado Público">
         </Helmet>
         <HomeHeader />
         <main>
