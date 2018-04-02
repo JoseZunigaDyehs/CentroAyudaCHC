@@ -13,9 +13,9 @@ class Buscador extends Component {
   traerArticulo = (e) => {//por URL window.LOCATION
     setTimeout(() => {
       let idArticulo = window.location.href.split('/')
-      if(idArticulo[idArticulo.length]==='/'){
+      if (idArticulo[idArticulo.length] === '/') {
         idArticulo = idArticulo[idArticulo.length - 2]
-      }else{
+      } else {
         idArticulo = idArticulo[idArticulo.length - 1]
       }
       idArticulo = parseInt(idArticulo)
@@ -31,12 +31,12 @@ class Buscador extends Component {
       articulos = art.filter((articulo) => {
         return articulo.nombre.toLowerCase().search(texto) !== -1;
       })
-      if(articulos.length > 0){
+      if (articulos.length > 0) {
         if (articulos.length > 10) {
           articulos = articulos.slice(0, 10)
         }
         this.props.setBusqueda(articulos)
-      }else{
+      } else {
         this.props.clearBusqueda()
       }
     } else {
@@ -46,7 +46,7 @@ class Buscador extends Component {
   }
 
   navegacionBuscador = (e) => {
-    if(e.key==='ArrowDown'){
+    if (e.key === 'ArrowDown') {
       document.getElementsByClassName('resultados-busqueda')['0'].children['0'].focus()
     }
   }
@@ -59,7 +59,7 @@ class Buscador extends Component {
       return (
         <div className='w-50 position-relative'>
           <div className="input-group w-100">
-            <input type="text" style={{backgroundImage:searchIcon}} className="form-control buscador" placeholder="Describe tu problema" onKeyDown={this.navegacionBuscador.bind(this)} onKeyUp={this.llenarResultados.bind(this)} />
+            <input type="text" style={{ backgroundImage: searchIcon }} className="form-control buscador" placeholder="Describe tu problema" onKeyDown={this.navegacionBuscador.bind(this)} onKeyUp={this.llenarResultados.bind(this)} />
             <Resultados articulos={articulos} getArticulo={this.traerArticulo} />
           </div>
         </div>
@@ -82,7 +82,7 @@ class Buscador extends Component {
 }
 
 const navegacionBuscador = (e) => {
-  if(e.key==='ArrowDown'){
+  if (e.key === 'ArrowDown') {
     document.getElementsByClassName('resultados-busqueda')['0'].children['0'].focus()
   }
 }

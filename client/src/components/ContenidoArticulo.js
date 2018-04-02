@@ -1,4 +1,8 @@
 import React from 'react'
+import Helmet from 'react-helmet'
+import { connect } from 'react-redux'
+import axios from 'axios'
+import { BrowserRouter as Router, Link } from 'react-router-dom'
 
 const InfoUtil = () => {
   return (
@@ -13,31 +17,115 @@ const InfoUtil = () => {
   )
 }
 
-const Navegacion = () => {
-  return(
-    <div className='d-flex justify-content-between pt-3'>
-      <button className='btn btn-nav'>Anterior</button>
-      <button className='btn btn-nav'>Siguiente</button>
-    </div>
-  )
+const obtenerAnterior = (idArticulo, secciones, traerArticulo, getArticulo) => {
+  for (let i = 0; i < secciones.length; i++) {
+    const articulos = secciones[i].articulos;
+    for (let j = 0; j < articulos.length; j++) {
+      const articulo = articulos[j];
+      if (articulo.pk === idArticulo) {//Si encuentra el mismo articulo
+        if (articulos[j - 1] !== undefined) {//si el anterior existe
+          let url = articulos[j - 1].url.split('/')
+          url = url[url.length - 2]
+          return (<Link to={'/articulo/' + url + '/'} className='btn btn-nav' onClick={(e) => traerArticulo(url, getArticulo)}>Anterior</Link>)
+        } else {
+          //SI TIENE ANTERIORES
+          if (secciones[i - 1] !== undefined && secciones[i - 1].articulos['0'] !== undefined) {
+            let largo = secciones[i - 1].articulos.length - 1
+            let url = secciones[i - 1].articulos[largo].url.split('/')
+            url = url[url.length - 2]
+            return (<Link to={'/articulo/' + url + '/'} className='btn btn-nav' onClick={(e) => traerArticulo(url, getArticulo)}>Anterior</Link>)
+          } else {
+            return (<div></div>);
+          }
+        }
+      }
+    }
+  }
+}
+
+const obtenerSiguiente = (idArticulo, secciones, traerArticulo, getArticulo) => {
+  for (let i = 0; i < secciones.length; i++) {
+    const articulos = secciones[i].articulos;
+    for (let j = 0; j < articulos.length; j++) {
+      const articulo = articulos[j];
+      if (articulo.pk === idArticulo) {//Si encuentra el mismo articulo
+        if (articulos[j + 1] !== undefined) {//si el anterior existe
+          let url = articulos[j + 1].url.split('/')
+          url = url[url.length - 2]
+          return (<Link to={'/articulo/' + url + '/'} className='btn btn-nav' onClick={(e) => traerArticulo(url, getArticulo)}>Siguiente</Link>)
+        } else {
+          //SI TIENE OTRO EN LA PROXIMA SECCION
+          if (secciones[i + 1] !== undefined && secciones[i + 1].articulos['0'] !== undefined) {
+            let url = secciones[i + 1].articulos['0'].url.split('/')
+            url = url[url.length - 2]
+            return (<Link to={'/articulo/' + url + '/'} className='btn btn-nav' onClick={(e) => traerArticulo(url, getArticulo)}>Siguiente</Link>)
+          } else {
+            return (<div></div>);
+          }
+        }
+      }
+    }
+  }
+}
+
+const Navegacion = (props) => {
+  if (props.manual !== null) {
+    return (
+      <div className='d-flex justify-content-between pt-3'>
+        {obtenerAnterior(props.idArticulo, props.manual.secciones, props.traerArticulo, props.getArticulo)}
+        {obtenerSiguiente(props.idArticulo, props.manual.secciones, props.traerArticulo, props.getArticulo)}
+      </div>
+    )
+  } else {
+    return (
+      <div></div>
+    )
+  }
 }
 
 const ContenidoArticulo = (props) => {
-  debugger
+
+  const traerArticulo = (idArticulo, getArticulo) => {//por URL window.LOCATION
+    setTimeout(() => {
+      idArticulo = parseInt(idArticulo)
+      getArticulo(idArticulo)
+    }, 10);
+  }
+
   return (
     <div className='col-md-8 mb-5 pb-4'>
+      <Helmet title={props.articulo.nombre + ' - Mercado Público'}></Helmet>
       <article className='mb-4'>
         <h3 className='f-w-500'>{props.articulo.nombre}</h3>
         <hr />
         <p className='mb-4'>{props.articulo.contenido}</p>
         <p className='fnt-14 c-gris-osc'>Fecha de publicación: {props.articulo.creacion}</p>
       </article>
-      <hr/>
+      <hr />
       <InfoUtil />
       <hr />
-      <Navegacion />
+      <Navegacion manual={props.manual} idArticulo={props.articulo.pk} traerArticulo={traerArticulo} getArticulo={props.getArticulo} />
     </div>
   )
 }
 
-export default ContenidoArticulo
+const mapStateToProps = (state) => {
+  return {
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    getArticulo: (idArticulo) => {
+      axios.get(`http://10.0.1.1:8000/articulo/${idArticulo}/`)
+        .then(res => {
+          dispatch({ type: 'GET_ARTICULO', data: res.data })
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContenidoArticulo)

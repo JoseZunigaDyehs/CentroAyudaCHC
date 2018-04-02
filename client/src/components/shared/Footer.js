@@ -4,7 +4,6 @@ import chat from '../../assets/img/chat.svg'
 import flecha from '../../assets/img/arrow-blue.svg'
 
 const Mensaje = (props) => {
-  // debugger
   let fono = '';
   if (props.props.fono !== '') {
     fono = <p>{props.props.fono}</p>

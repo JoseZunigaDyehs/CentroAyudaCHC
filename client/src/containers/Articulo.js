@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Helmet from 'react-helmet'
 import VolverBtn from '../components/shared/VolverBtn'
 import AsideArticulo from '../components/AsideArticulo'
 import ContenidoArticulo from '../components/ContenidoArticulo'
@@ -17,54 +16,58 @@ const Volver = () => (
 )
 
 const fechaCorrecta = (fecha) => {
+  const siYaPaso = fecha.substring(fecha.length-3, fecha.length-2)
 
-  const nuevaFecha = fecha.substring(0, 10)
-  const dia = nuevaFecha.substring(8, 10)
-  let mes = nuevaFecha.substring(5, 7)
-  const anio = nuevaFecha.substring(0, 4)
-
-  switch (mes) {
-    case '01':
-      mes = 'Enero';
-      break;
-    case '02':
-      mes = 'Febrero';
-      break;
-    case '03':
-      mes = 'Marzo';
-      break;
-    case '04':
-      mes = 'Abril';
-      break;
-    case '05':
-      mes = 'Mayo';
-      break;
-    case '06':
-      mes = 'Junio';
-      break;
-    case '07':
-      mes = 'Julio';
-      break;
-    case '08':
-      mes = 'Agosto';
-      break;
-    case '09':
-      mes = 'Septiembre';
-      break;
-    case '10':
-      mes = 'Octubre';
-      break;
-    case '11':
-      mes = 'Noviembre';
-      break;
-    case '12':
-      mes = 'Diciembre';
-      break;
-    default:
+  if(siYaPaso===':'){
+    const nuevaFecha = fecha.substring(0, 10)
+    const dia = nuevaFecha.substring(8, 10)
+    let mes = nuevaFecha.substring(5, 7)
+    const anio = nuevaFecha.substring(0, 4)
+  
+    switch (mes) {
+      case '01':
+        mes = 'Enero';
+        break;
+      case '02':
+        mes = 'Febrero';
+        break;
+      case '03':
+        mes = 'Marzo';
+        break;
+      case '04':
+        mes = 'Abril';
+        break;
+      case '05':
+        mes = 'Mayo';
+        break;
+      case '06':
+        mes = 'Junio';
+        break;
+      case '07':
+        mes = 'Julio';
+        break;
+      case '08':
+        mes = 'Agosto';
+        break;
+      case '09':
+        mes = 'Septiembre';
+        break;
+      case '10':
+        mes = 'Octubre';
+        break;
+      case '11':
+        mes = 'Noviembre';
+        break;
+      case '12':
+        mes = 'Diciembre';
+        break;
+      default:
+    }
+  
+    return dia + ' ' + mes + ' ' + anio;
+  }else{
+    return fecha;
   }
-
-  return dia + ' ' + mes + ' ' + anio;
-
 }
 
 class Articulo extends Component {
@@ -78,7 +81,6 @@ class Articulo extends Component {
   }
 
   render() {
-    debugger
     let articulo = {
       nombre: ''
       , contenido: ''
@@ -99,13 +101,12 @@ class Articulo extends Component {
 
     return (
       <div>
-        <Helmet title="Articulo"></Helmet>
         <main>
           <Volver />
           <div className='container'>
             <div className='row'>
-              <AsideArticulo manual={this.props.manual}/>
-              <ContenidoArticulo articulo={articulo}/>
+              <AsideArticulo manual={this.props.manual} articulo={articulo}/>
+              <ContenidoArticulo articulo={articulo} manual={this.props.manual}/>
             </div>
           </div>
         </main >
@@ -137,7 +138,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch({type:'CLEAR_ARTICULO'})
     },
     getManual: (idManual) => {
-      debugger;
       axios.get(`http://10.0.1.1:8000/manual/${idManual}/`)
       .then(res => {
         dispatch({type:'GET_MANUAL',data:res.data})

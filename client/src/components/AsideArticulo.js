@@ -1,5 +1,8 @@
 import React from 'react'
 import { BrowserRouter as Router, Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import axios from 'axios'
+
 
 const abrirNav = (e) => {
   let lis = e.currentTarget.parentNode.parentNode.children;
@@ -20,9 +23,21 @@ const abrirNav = (e) => {
   }
 }
 
+const abrirMenu = () => {
+  setTimeout(() => {
+    document.getElementsByClassName('active')['0'].parentElement.previousSibling.click();
+  }, 100);
+}
+
 const AsideArticle = (props) => {
-  debugger
-  if (props.manual === null) {
+  const traerArticulo = (idArticulo) => {//por URL window.LOCATION
+    setTimeout(() => {
+      idArticulo = parseInt(idArticulo)
+      props.getArticulo(idArticulo)
+    }, 10);
+  }
+
+  if (props.manual === null || props.articulo.pk === undefined) {
     return (
       <aside className='col-md-4 nav-articulo'>
       </aside>
@@ -35,33 +50,25 @@ const AsideArticle = (props) => {
         <ul className='p-0'>
           {props.manual.secciones.map(seccion =>
             <li className='d-flex flex-column' key={seccion.pk}>
-              <a href='#!' className='link-black mb-3' onClick={(e) => abrirNav(e)}>{seccion.nombre}</a>
+              <a className='link-black mb-3 c-pointer' onClick={(e) => abrirNav(e)}>{seccion.nombre} PK #{seccion.pk}</a>
               <div className='d-none flex-column nav-articulo-hide'>
                 {seccion.articulos.map(articulo => {
-                  debugger
                   let url = articulo.url.split('/')
-                  url = '/articulo/'+url[url.length-2]+'/'
-                  return (
-                    <Link to={url} key={articulo.pk} >{articulo.nombre}</Link>
-                  )
+                  url = url[url.length - 2]
+                  if (props.articulo.pk === articulo.pk) {
+                    return (
+                      <a key={articulo.pk} className='active'>{articulo.nombre}</a>
+                    )
+                  } else {
+                    return (
+                      <Link key={articulo.pk} to={'/articulo/'+url+'/'} className='c-pointer' onClick={(e) => traerArticulo(url)}>{articulo.nombre}</Link>
+                    )
+                  }
                 })}
+                {abrirMenu()}
               </div>
             </li>
           )}
-
-
-          {/* <li className='d-flex flex-column'>
-            <a href='#!' className='link-black mb-3' onClick={(e) => abrirNav(e)}>Primeros Pasos</a>
-            <div className='d-none flex-column nav-articulo-hide'>
-              <a href="#!">Antecedentes generales de la licitación</a>
-              <a href="#!">Antecedentes generales de la licitación</a>
-              <a href="#!" className='active'>Antecedentes generales de la licitación</a>
-              <a href="#!">Antecedentes generales de la licitación</a>
-              <a href="#!">Antecedentes generales de la licitación</a>
-              <a href="#!">Antecedentes generales de la licitación</a>
-            </div>
-          </li> */}
-
         </ul>
       </aside>
     )
@@ -69,4 +76,23 @@ const AsideArticle = (props) => {
 
 }
 
-export default AsideArticle
+const mapStateToProps = (state) => {
+  return {
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    getArticulo: (idArticulo) => {
+      axios.get(`http://10.0.1.1:8000/articulo/${idArticulo}/`)
+        .then(res => {
+          dispatch({ type: 'GET_ARTICULO', data: res.data })
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AsideArticle)

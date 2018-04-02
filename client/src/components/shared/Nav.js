@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../../assets/img/logoChc_blanco.svg'
+import logo from '../../assets/img/logo-MP.svg'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import Buscador from '../Buscador'
 
