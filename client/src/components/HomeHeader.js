@@ -17,8 +17,8 @@ const HomeHeader = () => (
         clase: 'btn-gra-blue'
       }} />
       <Boton props={{
-        title: 'Empieza a vender al Estado',
-        small: 'Descubre cómo comenzar a venderle al Estado',
+        title: '¿Qué es Convenio Marco?',
+        small: 'Descubre lo necesario para conocer un Convenio Marco',
         link: '',
         clase: 'btn-gra-red'
       }} />

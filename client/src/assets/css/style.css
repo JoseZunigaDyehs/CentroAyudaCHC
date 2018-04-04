@@ -24,6 +24,11 @@ a {
   color: #0667b4;
 }
 
+a:hover{
+  text-decoration: none;
+  font-weight: 500;
+}
+
 .bg-gris {
   background-color: #f5f7fa;
 }
@@ -50,6 +55,10 @@ a {
 
 .c-blue {
   color: #005fad;
+}
+
+.c-pink {
+  color: #ec495c;
 }
 
 .c-verde{
@@ -232,6 +241,22 @@ textarea {
   border-color: #a9a9a9;
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(202, 202, 202, 0.25);
+}
+
+.RichTextEditor__editor___1QqIU,
+.RichTextEditor__editor___1QqIU .public-DraftEditor-content{
+  min-height: 350px;
+}
+
+.contenedor-imagenes .acciones{
+  top: 0%;
+  left: 0%;
+  color: #fff;
+  background-color: rgba(21, 41, 53, .6);
+}
+
+.contenedor-imagenes .acciones .c-pointer:hover{
+  text-decoration: underline;
 }
 
 /***FIN FORM*/
