@@ -4,27 +4,7 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import { BrowserRouter as Router, Link } from 'react-router-dom'
 
-const InfoUtil = (props) => {
-  if (props.estadisticas === undefined) {
-    return (
-      <div></div>
-    )
-  } else {
-    let total = (props.estadisticas.si + props.estadisticas.no)
-    let porc = ((props.estadisticas.si * 100) / total).toFixed(0)
-    return (
-      <div className='py-3'>
-            <hr className='pt-3'/>
-        <p>¿Fue útil esta información?</p>
-        <div className='my-3'>
-          <button className='btn btn-ter mr-3'>Si</button>
-          <button className='btn btn-ter'>No</button>
-        </div>
-        <p className='c-gris-osc fnt-14'>{porc}% de las personas consideraron que fue útil.</p>
-      </div>
-    )
-  }
-}
+//Funciones
 
 const obtenerAnterior = (idArticulo, secciones, traerArticulo, getArticulo) => {
   for (let i = 0; i < secciones.length; i++) {
@@ -76,6 +56,28 @@ const obtenerSiguiente = (idArticulo, secciones, traerArticulo, getArticulo) => 
     }
   }
 }
+//componentes
+const InfoUtil = (props) => {
+  if (props.estadisticas === undefined) {
+    return (
+      <div></div>
+    )
+  } else {
+    let total = (props.estadisticas.si + props.estadisticas.no)
+    let porc = ((props.estadisticas.si * 100) / total).toFixed(0)
+    return (
+      <div className='py-3'>
+            <hr className='pt-3'/>
+        <p>¿Fue útil esta información?</p>
+        <div className='my-3'>
+          <button className='btn btn-ter mr-3'>Si</button>
+          <button className='btn btn-ter'>No</button>
+        </div>
+        <p className='c-gris-osc fnt-14'>{porc}% de las personas consideraron que fue útil.</p>
+      </div>
+    )
+  }
+}
 
 const Navegacion = (props) => {
   if (props.manual !== null) {
@@ -107,6 +109,11 @@ const ContenidoArticulo = (props) => {
       <article>
         <h3 className='f-w-500'>{props.articulo.nombre}</h3>
         <hr />
+        
+
+        <p>rtfhfghg</p><p><strong>fghfghfghfgh</strong></p><p><img src="https://www.quehacerenchile.cl/wp-content/uploads/2016/02/fuerte.jpg" width="490" height="322"/></p><p>fghfghgh</p>
+        
+        
         <p className='mb-4'>{props.articulo.contenido}</p>
         <p className='fnt-14 c-gris-osc'>Fecha de publicación: {props.articulo.creacion}</p>
       </article>
