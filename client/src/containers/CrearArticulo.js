@@ -1,5 +1,5 @@
 import React from 'react'
-import CrearEditarArticulo from '../components/CrearEditarArticulo'
+import CrearEditarArticulo from '../components/articulo/CrearEditarArticulo'
 
 const CrearArticulo = () => {
   return (

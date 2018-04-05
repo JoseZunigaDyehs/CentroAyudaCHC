@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import VolverBtn from '../components/shared/VolverBtn'
-import AsideArticulo from '../components/AsideArticulo'
-import ContenidoArticulo from '../components/ContenidoArticulo'
+import AsideArticulo from '../components/articulo/AsideArticulo'
+import ContenidoArticulo from '../components/articulo/ContenidoArticulo'
 import axios from 'axios'
 
 const Volver = () => (

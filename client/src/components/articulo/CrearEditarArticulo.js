@@ -1,10 +1,9 @@
 import React from 'react'
-import Seccion from './Seccion'
+import Seccion from '../shared/Seccion'
 import RichText from './RichText'
 
 //VERIFICAR SI ES EDITAR O CREAR
 const CrearEditarManual = (props) => {
-  debugger
   if (props.estado === 'crear') {
     return (
       <section className='container'>
@@ -17,7 +16,7 @@ const CrearEditarManual = (props) => {
         <div className='row mt-3'>
           <div className="form-group col-md-8 mb-0">
             <label className='d-flex flex-column'>Respuesta:</label>
-            <RichText />
+            <RichText texto='<p>rtfhfghg</p><p><strong>fghfghfghfgh</strong></p><p><img src="https://www.quehacerenchile.cl/wp-content/uploads/2016/02/fuerte.jpg" width="490" height="322"/></p><p>fghfghgh</p>'/>
             {/* <textarea cols="30" rows="4" className='form-control' placeholder='Descripción breve de este manual'></textarea> */}
           </div>
           <div className='col-md-4 bg-gris py-3'>
@@ -123,7 +122,6 @@ const copiarURL = (e) => {
   textField.remove()
 }
 const eliminarImagen = (e) => {
-  debugger
   e.currentTarget.parentElement.parentElement.remove()
   alert('se eliminará la imagen')
 }

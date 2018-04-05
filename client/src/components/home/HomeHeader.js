@@ -1,5 +1,5 @@
 import React from 'react'
-import flecha from '../assets/img/arrow-white.svg'
+import flecha from '../../assets/img/arrow-white.svg'
 
 const HomeHeader = () => (
   <header className='container mt-5 pt-5'>

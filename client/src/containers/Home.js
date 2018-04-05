@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Helmet from 'react-helmet'
-import HomeHeader from '../components/HomeHeader'
-import ListaManuales from '../components/ListaManuales'
-import TemasSugeridos from '../components/TemasSugeridos'
+import HomeHeader from '../components/home/HomeHeader'
+import ListaManuales from '../components/home/ListaManuales'
+import TemasSugeridos from '../components/home/TemasSugeridos'
 import axios from 'axios'
 
 class Home extends Component {

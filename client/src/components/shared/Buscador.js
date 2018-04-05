@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import { BrowserRouter as Router, Link } from 'react-router-dom'
-import searchIcon from '../assets/img/search-grey.svg'
+import searchIcon from '../../assets/img/search-grey.svg'
 
 class Buscador extends Component {
 

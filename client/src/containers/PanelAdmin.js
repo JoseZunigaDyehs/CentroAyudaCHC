@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import Helmet from 'react-helmet'
-import PanelHeader from '../components/PanelHeader'
-import ListaManuales from '../components/ListaManuales'
+import PanelHeader from '../components/panel/PanelHeader'
+import ListaManuales from '../components/home/ListaManuales'
 
 class PanelAdmin extends Component {
 

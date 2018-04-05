@@ -20,13 +20,13 @@ h5 {
   font-weight: 300;
 }
 
-a {
+a,a:hover {
   color: #0667b4;
 }
 
 a:hover{
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .bg-gris {

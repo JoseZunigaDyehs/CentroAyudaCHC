@@ -1,8 +1,8 @@
 import React from 'react'
 import VolverBtn from '../components/shared/VolverBtn'
-import CrearEditarManual from '../components/CrearEditarManual'
-import Seccion from '../components/Seccion'
-
+import CrearEditarManual from '../components/manual/CrearEditarManual'
+import {Seccion} from '../components/shared/Seccion'
+import BotonesManual from '../components/manual/BotonesManual'
 
 const Header = () => {
   return (
@@ -32,6 +32,7 @@ const EditarManual = () => {
       <main>
         <CrearEditarManual estado='editar' manual={{}}/>
         <Seccion estado='editar'/>
+        <BotonesManual />
       </main>
     </div>
   )

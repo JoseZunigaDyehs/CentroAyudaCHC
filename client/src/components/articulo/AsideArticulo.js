@@ -50,7 +50,7 @@ const AsideArticle = (props) => {
         <ul className='p-0'>
           {props.manual.secciones.map(seccion =>
             <li className='d-flex flex-column' key={seccion.pk}>
-              <a className='link-black mb-3 c-pointer' onClick={(e) => abrirNav(e)}>{seccion.nombre} PK #{seccion.pk}</a>
+              <a className='link-black mb-3 c-pointer' onClick={(e) => abrirNav(e)}>{seccion.nombre}</a>
               <div className='d-none flex-column nav-articulo-hide'>
                 {seccion.articulos.map(articulo => {
                   let url = articulo.url.split('/')
