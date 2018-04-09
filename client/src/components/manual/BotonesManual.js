@@ -1,5 +1,7 @@
 import React from 'react'
-import {validarVacio} from './Validaciones'
+import { validarVacio } from './Validaciones'
+import { connect } from 'react-redux'
+import axios from 'axios'
 
 //Funciones
 const agregarSeccion = (e) => {
@@ -18,46 +20,63 @@ const agregarSeccion = (e) => {
   seccion.parentElement.appendChild(div);
 }
 
-const publicarManual = (e) => {
+const publicarManual = (e, crearManual) => {
   const nombre = document.getElementsByName('nombreManual')['0']
   const descripcion = document.getElementsByName('descripcionManual')['0']
   const secciones = document.getElementsByName('nombreSeccion')
 
   let valido = true
-  if(!validarVacio(nombre,5,50)){
+  if (!validarVacio(nombre, 5, 50)) {
     valido = false
   }
-  if(!validarVacio(descripcion,5,100)){
+  if (!validarVacio(descripcion, 5, 100)) {
     valido = false
   }
   for (let i = 0; i < secciones.length; i++) {
     const seccion = secciones[i];
-    if(!validarVacio(seccion,5,50)){
+    if (!validarVacio(seccion, 5, 50)) {
       valido = false
     }
   }
-
-  if(!valido){
+  debugger
+  if (!valido) {
     return false;
-  }else{
-    alert('Se ha agregado el manual')
+  } else {
+    let manual = { 'nombre': nombre.value.trim(), 'contenido': descripcion.value.trim() }
+    crearManual(manual)
   }
 
 }
 
 //Componentes
-const BotonesManual = () => (
-  <section className='container'>
-  <div className='row'>
-    <div className='col-md-12 border-top d-flex agregarSeccion'>
-      <a href="#!" className='f-w-700 py-4 ' onClick={(e) => agregarSeccion(e)}>+ AGREGAR NUEVA SECCIÓN </a>
-    </div>
-    <div className='col-md-12 mt-5 d-flex justify-content-between mb-5 pb-5'>
-      <button className='btn btn-secondary px-4 l-s-1 py-3'>DESCARTAR CAMBIOS</button>
-      <button className='btn btn-primary px-4 l-s-1 py-3' onClick={(e)=>publicarManual(e)}>PUBLICAR CAMBIOS</button>
-    </div>
-  </div>
-</section>
-)
+const BotonesManual = (props) => {
+  debugger
+  if(props.estado==='crear'){
+    return (
+      <section className='container'>
+        <div className='row'>
+          <div className='col-md-12 mt-5 d-flex justify-content-between mb-5 pb-5'>
+            <button className='btn btn-secondary px-4 l-s-1 py-3'>DESCARTAR CAMBIOS</button>
+            <button className='btn btn-primary px-4 l-s-1 py-3' onClick={(e) => publicarManual(e, props.crearManual)}>PUBLICAR CAMBIOS</button>
+          </div>
+        </div>
+      </section>
+    )
+  }else{
+    return (
+      <section className='container'>
+        <div className='row'>
+          <div className='col-md-12 border-top d-flex agregarSeccion'>
+            <a href="#!" className='f-w-700 py-4 ' onClick={(e) => agregarSeccion(e)}>+ AGREGAR NUEVA SECCIÓN </a>
+          </div>
+          <div className='col-md-12 mt-5 d-flex justify-content-between mb-5 pb-5'>
+            <button className='btn btn-secondary px-4 l-s-1 py-3'>DESCARTAR CAMBIOS</button>
+            <button className='btn btn-primary px-4 l-s-1 py-3' onClick={(e) => publicarManual(e, props.crearManual)}>PUBLICAR CAMBIOS</button>
+          </div>
+        </div>
+      </section>
+    )
+  }
+}
 
 export default BotonesManual

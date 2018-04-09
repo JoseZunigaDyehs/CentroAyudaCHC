@@ -12,17 +12,19 @@ import EditarArticulo from './EditarArticulo'
 import CrearArticulo from './CrearArticulo'
 import Nav from '../components/shared/Nav'
 import Footer from '../components/shared/Footer'
+import Spinner from '../components/shared/Spinner'
 
 const App = (props) => {
   return (
     <Router>
       <div>
+        <Spinner />
         <Nav />
         <Route exact path='/' component={Home} />
         <Route exact path='/panel' component={PanelAdmin} />
         <Route exact path='/articulo/:id' component={Articulo} />
-        <Route exact path='/editar/manual/:id' component={EditarManual} />
-        <Route exact path='/crear/manual/' component={CrearManual} />
+        <Route exact path='/editar/manual/:id' component={CrearManual} estado='editar'/>
+        <Route exact path='/crear/manual/' component={CrearManual} estado='crear'/>
         <Route exact path='/editar/articulo/:id' component={EditarArticulo} />
         <Route exact path='/crear/articulo/' component={CrearArticulo} />
         <Footer />

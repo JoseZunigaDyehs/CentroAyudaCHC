@@ -1,26 +1,24 @@
-export const manuales = (state = null, action) => {
+export const seccion = (state = null, action) => {
   var nuevoEstado = Object.assign({}, state);
   switch (action.type) {
-    case 'GET_MANUALES':
+    case 'GET_SECCION':
       nuevoEstado = action.data;
       return nuevoEstado;  
-    case 'CLEAR_MANUALES':
+    case 'CLEAR_SECCION':
       return null;  
     default:
       return state;
   }
 }
-
-export const manual = (state = null, action) => {
+export const idSeccion = (state = null, action) => {
   var nuevoEstado = Object.assign({}, state);
   switch (action.type) {
-    case 'GET_MANUAL':
+    case 'SET_ID_SECCION':
       nuevoEstado = action.data;
       return nuevoEstado;  
-    case 'CLEAR_MANUAL':
+    case 'CLEAR_ID_SECCION':
       return null;  
     default:
       return state;
   }
 }
-

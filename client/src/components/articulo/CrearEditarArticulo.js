@@ -1,9 +1,55 @@
 import React from 'react'
 import Seccion from '../shared/Seccion'
 import RichText from './RichText'
+import Spinner from '../shared/Spinner'
+import { connect } from 'react-redux'
+import axios from 'axios'
 
+//Funciones
+const abrirSubirImagen = (e) => {
+  var input = document.getElementById('subirImagen')
+  input.click()
+}
+
+const nuevaImagen = (e, fn,offSpinner) => {
+  let file = e.currentTarget.files
+  if (file["0"].type === 'image/jpeg' || file["0"].type === 'image/png') {
+    //SUBIR IMAGEN
+    fn(file['0'],offSpinner);
+  } else {
+    e.currentTarget.nextElementSibling.textContent = 'Debe ser una imagen'
+    e.currentTarget.nextElementSibling.classList.remove('d-none')
+  }
+}
+
+const mostrarAcciones = (e) => {
+  e.currentTarget.children[1].classList.remove('d-none')
+  e.currentTarget.children[1].classList.add('d-flex')
+}
+
+const quitarAcciones = (e) => {
+  e.currentTarget.children[1].classList.add('d-none')
+  e.currentTarget.children[1].classList.remove('d-flex')
+}
+
+const copiarURL = (e) => {
+  var textField = document.createElement('textarea')
+  textField.innerText = e.currentTarget.parentElement.previousElementSibling.src
+  document.body.appendChild(textField)
+  textField.select()
+  document.execCommand('copy')
+  textField.remove()
+}
+
+const eliminarImagen = (e) => {
+  e.currentTarget.parentElement.parentElement.remove()
+  alert('se eliminará la imagen')
+}
+
+//Componentes
 //VERIFICAR SI ES EDITAR O CREAR
-const CrearEditarManual = (props) => {
+const CrearEditarArticulo = (props) => {
+  debugger
   if (props.estado === 'crear') {
     return (
       <section className='container'>
@@ -16,16 +62,18 @@ const CrearEditarManual = (props) => {
         <div className='row mt-3'>
           <div className="form-group col-md-8 mb-0">
             <label className='d-flex flex-column'>Respuesta:</label>
-            <RichText texto='<p>rtfhfghg</p><p><strong>fghfghfghfgh</strong></p><p><img src="https://www.quehacerenchile.cl/wp-content/uploads/2016/02/fuerte.jpg" width="490" height="322"/></p><p>fghfghgh</p>'/>
+            <RichText texto='<p>rtfhfghg</p><p><strong>fghfghfghfgh</strong></p><p><img src="https://www.quehacerenchile.cl/wp-content/uploads/2016/02/fuerte.jpg" width="490" height="322"/></p><p>fghfghgh</p>' />
           </div>
           <div className='col-md-4 bg-gris py-3'>
-            <form>
-              <div className="form-group">
-                <label htmlFor="exampleFormControlFile1">Imágenes del artículo:</label>
-                <input type="file" className="form-control-file" id="exampleFormControlFile1" onChange={(e) => nuevaImagen(e)}/>
+            <div className="form-group d-flex flex-column">
+              <label htmlFor="subirImagen">Imágenes del artículo:</label>
+              <button className='btn btn-primary' onClick={(e) => abrirSubirImagen(e)}>Cargar imagen</button>
+              <form>
+                <input type="file" className="form-control-file d-none" id="subirImagen" onChange={(e) => nuevaImagen(e, props.subirImagen, props.offSpinner)} />
                 <p className='fnt-14 d-none error c-pink'></p>
-              </div>
-            </form>
+              </form>
+            </div>
+            <hr />
             <div className='contenedor-imagenes'>
               <div className='position-relative mb-2' onMouseEnter={(e) => mostrarAcciones(e)} onMouseLeave={(e) => quitarAcciones(e)}>
                 <img className='w-100' src="https://www.quehacerenchile.cl/wp-content/uploads/2016/02/fuerte.jpg" alt="https://www.quehacerenchile.cl/wp-content/uploads/2016/02/fuerte.jpg" />
@@ -56,7 +104,7 @@ const CrearEditarManual = (props) => {
             </div>
           </div>
           <div className='col-md-12 d-flex justify-content-between my-5 pb-5'>
-            <button className='btn btn-danger px-5 py-3'>ELIMINAR ARTÍCULO</button>
+            <button className='btn btn-danger px-5 py-3' >ELIMINAR ARTÍCULO</button>
             <button className='btn btn-primary px-5 py-3'>AGREGAR ARTÍCULO</button>
           </div>
         </div>
@@ -94,35 +142,43 @@ const CrearEditarManual = (props) => {
 
 }
 
-const nuevaImagen = (e) =>{
-  console.log(e.currentTarget.files);
-  let file = e.currentTarget.files
-  if(file["0"].type==='image/jpeg' || file["0"].type==='image/png'){
-
-  }else{
-    e.currentTarget.nextElementSibling.textContent = 'Debe ser una imagen'
-    e.currentTarget.nextElementSibling.classList.remove('d-none')
+const mapStateToProps = (state) => {
+  return {
+    spinner: state.spinner,
+    manual: state.manual
   }
 }
-const mostrarAcciones = (e) => {
-  e.currentTarget.children[1].classList.remove('d-none')
-  e.currentTarget.children[1].classList.add('d-flex')
-}
-const quitarAcciones = (e) => {
-  e.currentTarget.children[1].classList.add('d-none')
-  e.currentTarget.children[1].classList.remove('d-flex')
-}
-const copiarURL = (e) => {
-  var textField = document.createElement('textarea')
-  textField.innerText = e.currentTarget.parentElement.previousElementSibling.src
-  document.body.appendChild(textField)
-  textField.select()
-  document.execCommand('copy')
-  textField.remove()
-}
-const eliminarImagen = (e) => {
-  e.currentTarget.parentElement.parentElement.remove()
-  alert('se eliminará la imagen')
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    onSpinner: () => {
+      dispatch({ type: 'ON_SPINNER' })
+    },
+    offSpinner: () => {
+      dispatch({ type: 'OFF_SPINNER' })
+    },
+    subirImagen: (file,offSpinner) => {
+      dispatch({ type: 'ON_SPINNER' })
+      const nombre = file.name
+      const config = {
+        headers: { 'content-type': 'multipart/form-data' }
+      }
+      var bodyFormData = new FormData();
+      bodyFormData.set('nombre', nombre);
+      bodyFormData.set('contenido', file);
+
+      axios.post('http://10.0.1.1:8000/imagenes/', bodyFormData, config).
+        then(res => {
+          console.log(res.data.contenido);
+          offSpinner();
+        }).
+        catch(err => {
+          console.log(err);
+          offSpinner();
+        })
+
+    }
+  }
 }
 
-export default CrearEditarManual
+export default connect(mapStateToProps, mapDispatchToProps)(CrearEditarArticulo)

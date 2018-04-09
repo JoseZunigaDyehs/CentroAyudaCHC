@@ -1,5 +1,6 @@
 import React from 'react'
 import { validarVacio } from '../manual/Validaciones'
+import { BrowserRouter as Router, Link } from 'react-router-dom'
 
 //FUNCIONES
 const eliminar = () => {
@@ -42,6 +43,8 @@ const OcultoVisible = (props) => {
   }
 }
 
+
+//Componentes
 export const NuevaSeccion = (
   <div className='container seccion'>
     <div className='row'>
@@ -59,6 +62,67 @@ export const NuevaSeccion = (
     </div>
   </div>
 )
+
+const Articulos = (props) => {
+  let misArticulos;
+  if (props.articulos.length > 0) {
+    misArticulos = props.articulos.map((articulo) => {
+      return (
+        <a href={articulo.url} className='mb-3 border-bottom pb-3'>{articulo.nombre}</a>
+      )
+    })
+    return (
+      <div className='col-md-12'>
+        <div className='d-flex flex-column pb-4'>
+          <label className='mb-4'>¿Cuáles son los artículos de esta sección?</label>
+          {misArticulos}
+          <Link to='/crear/articulo/' onClick={(e)=>props.guardarIdSeccion(e,props.idSeccion)} className='mb-3 f-w-700 mt-4 justify-content-end d-flex'>+ AGREGAR NUEVO ARTÍCULO</Link>
+        </div>
+      </div>
+    )
+  }else{
+    return(
+      <div className='col-md-12'>
+        <div className='d-flex flex-column pb-4'>
+          <label className='mb-4'>Esta sección no tiene artículos</label>
+          <Link to='/crear/articulo/' onClick={(e)=>props.guardarIdSeccion(e,props.idSeccion)} data-seccion={props.idSeccion} className='mb-3 f-w-700 mt-4 justify-content-end d-flex'>+ AGREGAR NUEVO ARTÍCULO</Link>
+        </div>
+      </div>
+    )
+  }
+}
+
+const Secciones = (secciones) => {
+  let divSecciones = secciones.secciones.map((seccion) => {
+    return (
+      <section>
+        <div className='container seccion'>
+          <div className='row'>
+            <div className='col-md-12 d-flex justify-content-between border-bottom mb-3 pb-2 mt-5'>
+              <h5 className='f-w-500'>{seccion.nombre}</h5>
+              <div className='d-flex'>
+                <OcultoVisible visible={seccion.estado} />
+                <p className='c-pointer ml-4' onClick={(e) => eliminar()}>x</p>
+              </div>
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col-md-6'>{/*  EDITAR */}
+              <div className="form-group mb-5">
+                <label className='d-flex flex-column'>Editar nombre de la sección</label>
+                <input type="text" name='nombreSeccion' className="form-control" placeholder="Nombre de esta sección" defaultValue={seccion.nombre} />
+              </div>
+            </div>
+            <Articulos articulos={seccion.articulos} idSeccion={seccion.pk} guardarIdSeccion={secciones.guardarIdSeccion}/>
+          </div>
+        </div>
+      </section>
+    )
+  })
+  return (
+    divSecciones
+  )
+}
 
 //MAIN
 export const Seccion = (props) => {
@@ -84,38 +148,9 @@ export const Seccion = (props) => {
       </section>
     )
   } else {
+    debugger
     return (
-      <section>
-        <div className='container seccion'>
-          <div className='row'>
-            <div className='col-md-12 d-flex justify-content-between border-bottom mb-3 pb-2 mt-5'>
-              <h5 className='f-w-500'>Seccion Nombre de la sección</h5>
-              <div className='d-flex'>
-                <OcultoVisible visible={0} />
-                <p className='c-pointer ml-4' onClick={(e) => eliminar()}>x</p>
-              </div>
-            </div>
-          </div>
-          <div className='row'>
-            <div className='col-md-6'>{/*  EDITAR */}
-              <div className="form-group mb-5">
-                <label className='d-flex flex-column'>Editar nombre de la sección</label>
-                <input type="text" name='nombreSeccion' className="form-control" placeholder="Nombre de esta sección" defaultValue='Nombre de la sección' />
-              </div>
-            </div>
-            <div className='col-md-12'>{/*  ARTICULOS */}
-              <div className='d-flex flex-column pb-4'>
-                <label className='mb-4'>¿Cuáles son los artículos de esta sección?</label>
-                <a href="#!" className='mb-3 border-bottom pb-3'>Selección y Descripción del Producto o Servicio </a>
-                <a href="#!" className='mb-3 border-bottom pb-3'>Cronograma de la licitación </a>
-                <a href="#!" className='mb-3 border-bottom pb-3'>Selección y Descripción del Producto o Servicio </a>
-                <a href="#!" className='mb-3 border-bottom pb-3'>Cronograma de la licitación </a>
-                <a href="#!" className='mb-3 f-w-700 mt-4 justify-content-end d-flex'>+ AGREGAR NUEVO ARTÍCULO</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Secciones secciones={props.manual.secciones} guardarIdSeccion={props.guardarIdSeccion}/>
     )
   }
 }
