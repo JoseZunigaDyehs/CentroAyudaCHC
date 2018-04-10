@@ -1,4 +1,4 @@
-export const estado = (state = null, action) => {
+export const estado = (state = 'crear', action) => {
   var nuevoEstado = Object.assign({}, state);
   switch (action.type) {
     case 'EDITAR':

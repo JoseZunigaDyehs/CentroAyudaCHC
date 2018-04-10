@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { manuales, manual } from './manuales'
-import { articulos, busqueda, articulo } from './articulos'
+import { articulos, busqueda, articulo, imagenes } from './articulos'
 import { spinner } from './spinner'
 import { seccion, idSeccion } from './seccion'
 import { estado } from './estado'
@@ -14,5 +14,6 @@ export default combineReducers({
   spinner,
   seccion,
   estado,
-  idSeccion
+  idSeccion,
+  imagenes
 })

@@ -66,9 +66,9 @@ export const NuevaSeccion = (
 const Articulos = (props) => {
   let misArticulos;
   if (props.articulos.length > 0) {
-    misArticulos = props.articulos.map((articulo) => {
+    misArticulos = props.articulos.map((articulo,i) => {
       return (
-        <a href={articulo.url} className='mb-3 border-bottom pb-3'>{articulo.nombre}</a>
+        <a href={articulo.url} key={i} className='mb-3 border-bottom pb-3'>{articulo.nombre}</a>
       )
     })
     return (
@@ -93,9 +93,9 @@ const Articulos = (props) => {
 }
 
 const Secciones = (secciones) => {
-  let divSecciones = secciones.secciones.map((seccion) => {
+  let divSecciones = secciones.secciones.map((seccion,i) => {
     return (
-      <section>
+      <section key={i}>
         <div className='container seccion'>
           <div className='row'>
             <div className='col-md-12 d-flex justify-content-between border-bottom mb-3 pb-2 mt-5'>
@@ -147,10 +147,14 @@ export const Seccion = (props) => {
         </div>
       </section>
     )
-  } else {
+  } else if(props.estado === 'editar'){
     debugger
     return (
       <Secciones secciones={props.manual.secciones} guardarIdSeccion={props.guardarIdSeccion}/>
+    )
+  }else{
+    return(
+      <div></div>
     )
   }
 }

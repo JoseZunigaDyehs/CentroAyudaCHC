@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { Component } from 'react'
 import Seccion from '../shared/Seccion'
 import RichText from './RichText'
 import Spinner from '../shared/Spinner'
 import { connect } from 'react-redux'
 import axios from 'axios'
+import Imagenes from './Imagenes'
+import { validarVacio } from '../manual/Validaciones'
 
 //Funciones
 const abrirSubirImagen = (e) => {
@@ -11,141 +13,156 @@ const abrirSubirImagen = (e) => {
   input.click()
 }
 
-const nuevaImagen = (e, fn,offSpinner) => {
+const nuevaImagen = (e, fn, offSpinner) => {
   let file = e.currentTarget.files
   if (file["0"].type === 'image/jpeg' || file["0"].type === 'image/png') {
     //SUBIR IMAGEN
-    fn(file['0'],offSpinner);
+    fn(file['0'], offSpinner);
   } else {
     e.currentTarget.nextElementSibling.textContent = 'Debe ser una imagen'
     e.currentTarget.nextElementSibling.classList.remove('d-none')
   }
 }
 
-const mostrarAcciones = (e) => {
-  e.currentTarget.children[1].classList.remove('d-none')
-  e.currentTarget.children[1].classList.add('d-flex')
-}
+const agregarArticulo = (e, idManual, idSeccion, imagenes, _agregarArticulo) => {
+  document.getElementById('agregarArticulo').click()
+  const nombre = document.getElementsByName('tituloArticulo')['0']
+  const contenido = document.getElementById('agregarArticulo')
+  let valido = true
+  if (!validarVacio(nombre, 5, 50)) {
+    valido = false
+  }
+  if (contenido.dataset.richtext.trim() === "<p><br></p>") {
+    let p = document.createElement('p')
+    p.classList = 'c-pink'
+    let r = document.createTextNode('Debe ingresar campo')
+    p.appendChild(r)
+    document.getElementsByClassName('RichTextEditor__root___2QXK-')['0'].parentElement.parentElement.appendChild(p)
+    valido = false;
+  } else {
+    if (document.getElementsByClassName('RichTextEditor__root___2QXK-')['0'].parentElement.nextElementSibling !== null) {
+      document.getElementsByClassName('RichTextEditor__root___2QXK-')['0'].parentElement.nextElementSibling.remove();
+    }
+  }
 
-const quitarAcciones = (e) => {
-  e.currentTarget.children[1].classList.add('d-none')
-  e.currentTarget.children[1].classList.remove('d-flex')
-}
-
-const copiarURL = (e) => {
-  var textField = document.createElement('textarea')
-  textField.innerText = e.currentTarget.parentElement.previousElementSibling.src
-  document.body.appendChild(textField)
-  textField.select()
-  document.execCommand('copy')
-  textField.remove()
-}
-
-const eliminarImagen = (e) => {
-  e.currentTarget.parentElement.parentElement.remove()
-  alert('se eliminará la imagen')
+  if (!valido) {
+    return false;
+  } else {
+    debugger
+    let _imagenes = [];
+    for (let i = 0; i < imagenes.length; i++) {
+      const imagen = imagenes[i];
+      _imagenes.push(imagen.url)
+    }
+    const texto = document.getElementById('agregarArticulo').dataset.richtext
+    const articulo = {
+      'nombre': nombre.value,
+      'contenido': texto,
+      'estado': 1,
+      'manual': idManual,
+      'imagenes': _imagenes,
+      'seccion': 'http://10.0.1.1:8000/editor/secciones/' + idSeccion + '/'
+    }
+    _agregarArticulo(articulo);
+  }
 }
 
 //Componentes
 //VERIFICAR SI ES EDITAR O CREAR
-const CrearEditarArticulo = (props) => {
-  debugger
-  if (props.estado === 'crear') {
-    return (
-      <section className='container'>
-        <div className='row mt-3'>
-          <div className="form-group col-md-6">
-            <label className='d-flex flex-column'>¿Cuál es el título de este artículo?</label>
-            <input type="text" className="form-control" placeholder="Título de este artículo" />
-          </div>
-        </div>
-        <div className='row mt-3'>
-          <div className="form-group col-md-8 mb-0">
-            <label className='d-flex flex-column'>Respuesta:</label>
-            <RichText texto='<p>rtfhfghg</p><p><strong>fghfghfghfgh</strong></p><p><img src="https://www.quehacerenchile.cl/wp-content/uploads/2016/02/fuerte.jpg" width="490" height="322"/></p><p>fghfghgh</p>' />
-          </div>
-          <div className='col-md-4 bg-gris py-3'>
-            <div className="form-group d-flex flex-column">
-              <label htmlFor="subirImagen">Imágenes del artículo:</label>
-              <button className='btn btn-primary' onClick={(e) => abrirSubirImagen(e)}>Cargar imagen</button>
-              <form>
-                <input type="file" className="form-control-file d-none" id="subirImagen" onChange={(e) => nuevaImagen(e, props.subirImagen, props.offSpinner)} />
-                <p className='fnt-14 d-none error c-pink'></p>
-              </form>
-            </div>
-            <hr />
-            <div className='contenedor-imagenes'>
-              <div className='position-relative mb-2' onMouseEnter={(e) => mostrarAcciones(e)} onMouseLeave={(e) => quitarAcciones(e)}>
-                <img className='w-100' src="https://www.quehacerenchile.cl/wp-content/uploads/2016/02/fuerte.jpg" alt="https://www.quehacerenchile.cl/wp-content/uploads/2016/02/fuerte.jpg" />
-                <div className='acciones d-none position-absolute w-100 h-100 justify-content-between p-3'>
-                  <div className='d-flex align-items-center c-pointer' onClick={(e) => copiarURL(e)}>
-                    <i className="fas fa-copy mr-2"></i>
-                    <p>Copiar URL</p>
-                  </div>
-                  <div className='d-flex align-items-center c-pointer' onClick={(e) => eliminarImagen(e)}>
-                    <p>Eliminar Imagen</p>
-                    <i className="fas fa-trash-alt ml-2"></i>
-                  </div>
-                </div>
-              </div>
-              <div className='position-relative' onMouseEnter={(e) => mostrarAcciones(e)} onMouseLeave={(e) => quitarAcciones(e)}>
-                <img className='w-100' src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Isla_Mancera_con_nubes.jpg" alt="https://upload.wikimedia.org/wikipedia/commons/e/ec/Isla_Mancera_con_nubes.jpg" />
-                <div className='acciones d-none position-absolute w-100 h-100 justify-content-between p-3'>
-                  <div className='d-flex align-items-center c-pointer' onClick={(e) => copiarURL(e)}>
-                    <i className="fas fa-copy mr-2"></i>
-                    <p>Copiar URL</p>
-                  </div>
-                  <div className='d-flex align-items-center c-pointer' onClick={(e) => eliminarImagen(e)}>
-                    <p>Eliminar Imagen</p>
-                    <i className="fas fa-trash-alt ml-2"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='col-md-12 d-flex justify-content-between my-5 pb-5'>
-            <button className='btn btn-danger px-5 py-3' >ELIMINAR ARTÍCULO</button>
-            <button className='btn btn-primary px-5 py-3'>AGREGAR ARTÍCULO</button>
-          </div>
-        </div>
-      </section>
-    )
-  } else {
-    let articulo;
-    if (props.articulo.nombre === undefined) {
-      articulo = { nombre: 'nombre', descripcion: 'descripcion' }
-    } else {
-      articulo = props.articulo
-    }
-    return (
-      <section className='container'>
-        <div className='row mt-3'>
-          <div className="form-group col-md-6">
-            <label className='d-flex flex-column'>¿Cuál es el título de este artículo?</label>
-            <input type="text" className="form-control" placeholder="Título de este artículo" value={articulo.nombre} />
-          </div>
-        </div>
-        <div className='row mt-3'>
-          <div className="form-group col-md-12">
-            <label className='d-flex flex-column'>Respuesta:</label>
-            <RichText />
-            <textarea cols="30" rows="4" className='form-control' placeholder='Descripción breve de este manual' value={articulo.descripcion}></textarea>
-          </div>
-          <div className='col-md-12 d-flex justify-content-between my-5 pb-5'>
-            <button className='btn btn-danger px-5 py-3'>ELIMINAR ARTÍCULO</button>
-            <button className='btn btn-primary px-5 py-3'>AGREGAR ARTÍCULO</button>
-          </div>
-        </div>
-      </section>
-    )
+class CrearEditarArticulo extends Component {
+
+  componentWillUnmount() {
+    this.props.clearIdSeccion();
   }
 
+  render() {
+    debugger
+    if (this.props.estado === 'crear') {
+      return (
+        <section className='container'>
+          <div className='row mt-3'>
+            <div className="form-group col-md-6">
+              <label className='d-flex flex-column'>¿Cuál es el título de este artículo?</label>
+              <input type="text" className="form-control" placeholder="Título de este artículo" name='tituloArticulo' onKeyUp={(e) => validarVacio(e, 5, 50)} />
+            </div>
+          </div>
+          <div className='row mt-3'>
+            <div className="form-group col-md-8 mb-0">
+              <label className='d-flex flex-column'>Respuesta:</label>
+              <RichText texto='' />
+              {/* <RichText texto='<p>rtfhfghg</p><p><strong>fghfghfghfgh</strong></p><p><img src="https://www.quehacerenchile.cl/wp-content/uploads/2016/02/fuerte.jpg" width="490" height="322"/></p><p>fghfghgh</p>' /> */}
+            </div>
+            <div className='col-md-4 bg-gris py-3'>
+              <div className="form-group d-flex flex-column">
+                <label htmlFor="subirImagen">Imágenes del artículo:</label>
+                <button className='btn btn-primary' onClick={(e) => abrirSubirImagen(e)}>Cargar imagen</button>
+                <form>
+                  <input type="file" className="form-control-file d-none" id="subirImagen" onChange={(e) => nuevaImagen(e, this.props.subirImagen, this.props.offSpinner)} />
+                  <p className='fnt-14 d-none error c-pink'></p>
+                </form>
+              </div>
+              <hr />
+              <Imagenes />
+            </div>
+            <div className='col-md-12 d-flex justify-content-between my-5 pb-5'>
+              <button className='btn btn-danger px-5 py-3' >ELIMINAR ARTÍCULO</button>
+              <button className='btn btn-primary px-5 py-3' onClick={(e) => agregarArticulo(e, this.props.manual.pk, this.props.idSeccion, this.props.imagenes, this.props.crearArticulo)}>AGREGAR ARTÍCULO</button>
+            </div>
+          </div>
+        </section>
+      )
+    } else {
+      debugger
+      let articulo;
+      if (this.props.articulo.nombre === undefined) {
+        articulo = { nombre: 'nombre', descripcion: 'descripcion' }
+      } else {
+        articulo = this.props.articulo
+      }
+      return (
+        <section className='container'>
+          <div className='row mt-3'>
+            <div className="form-group col-md-6">
+              <label className='d-flex flex-column'>¿Cuál es el título de este artículo?</label>
+              <input type="text" className="form-control" placeholder="Título de este artículo" />
+            </div>
+          </div>
+          <div className='row mt-3'>
+            <div className="form-group col-md-8 mb-0">
+              <label className='d-flex flex-column'>Respuesta:</label>
+              <RichText texto='' />
+              {/* <RichText texto='<p>rtfhfghg</p><p><strong>fghfghfghfgh</strong></p><p><img src="https://www.quehacerenchile.cl/wp-content/uploads/2016/02/fuerte.jpg" width="490" height="322"/></p><p>fghfghgh</p>' /> */}
+            </div>
+            <div className='col-md-4 bg-gris py-3'>
+              <div className="form-group d-flex flex-column">
+                <label htmlFor="subirImagen">Imágenes del artículo:</label>
+                <button className='btn btn-primary' onClick={(e) => abrirSubirImagen(e)}>Cargar imagen</button>
+                <form>
+                  <input type="file" className="form-control-file d-none" id="subirImagen" onChange={(e) => nuevaImagen(e, this.props.subirImagen, this.props.offSpinner)} />
+                  <p className='fnt-14 d-none error c-pink'></p>
+                </form>
+              </div>
+              <hr />
+              <Imagenes />
+            </div>
+            <div className='col-md-12 d-flex justify-content-between my-5 pb-5'>
+              <button className='btn btn-danger px-5 py-3' >ELIMINAR ARTÍCULO</button>
+              <button className='btn btn-primary px-5 py-3'>AGREGAR ARTÍCULO</button>
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+  }
 }
 
 const mapStateToProps = (state) => {
   return {
     spinner: state.spinner,
-    manual: state.manual
+    manual: state.manual,
+    idSeccion: state.idSeccion,
+    imagenes: state.imagenes
   }
 }
 
@@ -157,7 +174,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     offSpinner: () => {
       dispatch({ type: 'OFF_SPINNER' })
     },
-    subirImagen: (file,offSpinner) => {
+    subirImagen: (file, offSpinner) => {
       dispatch({ type: 'ON_SPINNER' })
       const nombre = file.name
       const config = {
@@ -169,7 +186,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
       axios.post('http://10.0.1.1:8000/imagenes/', bodyFormData, config).
         then(res => {
-          console.log(res.data.contenido);
+          debugger
+          dispatch({ type: 'ADD_IMAGEN', data: res.data })
           offSpinner();
         }).
         catch(err => {
@@ -177,6 +195,19 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           offSpinner();
         })
 
+    },
+    clearIdSeccion: () => {
+      dispatch({ type: 'CLEAR_ID_SECCION' })
+    },
+    crearArticulo: (articulo) => {
+      debugger
+      axios.post('http://10.0.1.1:8000/articulos/',articulo)
+      .then(res=>{
+        console.log(res);
+      })
+      .catch(err=>{
+        console.log(err);
+      })
     }
   }
 }

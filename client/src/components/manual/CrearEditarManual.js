@@ -22,7 +22,7 @@ const CrearEditarManual = (props) => {
         </div>
       </section>
     )
-  } else {
+  } else if(props.estado === 'editar'){
     let manual;
     if (props.manual.nombre === undefined) {
       manual = { nombre: 'nombre', descripcion: 'descripcion' }
@@ -46,6 +46,10 @@ const CrearEditarManual = (props) => {
           </div>
         </div>
       </section>
+    )
+  }else{
+    return(
+      <div></div>
     )
   }
 

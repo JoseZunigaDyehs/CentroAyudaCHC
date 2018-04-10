@@ -56,10 +56,10 @@ const Header = (props) => {
 
 //Componente Main
 class CrearManual extends Component {
-  componentWillUnmount() {
-    this.props.clearManual();
-    this.props.clearIdSeccion();
-  }
+  // componentWillUnmount() {
+  //   this.props.clearManual();
+  //   this.props.clearIdSeccion();
+  // }
   render() {
     let tipoPagina;
     if (this.props.estado !== null) {
@@ -122,8 +122,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     clearManual: () => {
       dispatch({ type: 'CLEAR_MANUAL' })
     },
-    guardarIdSeccion: (id) => {
-      dispatch({type:'SET_ID_SECCION',data:id})
+    guardarIdSeccion: (elem) => {
+      let idSeccion = parseInt(elem.currentTarget.dataset.seccion)
+      dispatch({type:'SET_ID_SECCION',data:idSeccion})
     },
     clearIdSeccion: () =>{
       dispatch({type:'CLEAR_ID_SECCION'})

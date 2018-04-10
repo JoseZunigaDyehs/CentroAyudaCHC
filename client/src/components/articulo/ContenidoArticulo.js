@@ -94,6 +94,13 @@ const Navegacion = (props) => {
   }
 }
 
+const toHtml = (html) => {
+  if(html!==""){
+
+    document.getElementById('contenidoArticulo').innerHTML = html
+  }
+}
+
 const ContenidoArticulo = (props) => {
 
   const traerArticulo = (idArticulo, getArticulo) => {//por URL window.LOCATION
@@ -102,19 +109,13 @@ const ContenidoArticulo = (props) => {
       getArticulo(idArticulo)
     }, 10);
   }
-
   return (
     <div className='col-md-8 mb-5 pb-4'>
       <Helmet title={props.articulo.nombre + ' - Manuales Mercado Público'}></Helmet>
       <article>
         <h3 className='f-w-500'>{props.articulo.nombre}</h3>
         <hr />
-        
-
-        <p>rtfhfghg</p><p><strong>fghfghfghfgh</strong></p><p><img src="https://www.quehacerenchile.cl/wp-content/uploads/2016/02/fuerte.jpg" width="490" height="322"/></p><p>fghfghgh</p>
-        
-        
-        <p className='mb-4'>{props.articulo.contenido}</p>
+        <p className='mb-4' id='contenidoArticulo'>{toHtml(props.articulo.contenido)}</p>
         <p className='fnt-14 c-gris-osc'>Fecha de publicación: {props.articulo.creacion}</p>
       </article>
       <InfoUtil estadisticas={{si:3,no:9}}/>

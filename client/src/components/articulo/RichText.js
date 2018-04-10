@@ -8,11 +8,10 @@ class RichText extends Component {
   }
 
   getTexto = () => {
-    console.log(this.state.value.toString('html'));
+    document.getElementById('agregarArticulo').dataset.richtext = this.state.value.toString('html')
   }
 
   componentWillMount = () => {
-    debugger
     if(this.props.texto.length>0){
       this.state.value = RichTextEditor.createValueFromString(this.props.texto,'html');
     }
@@ -37,7 +36,7 @@ class RichText extends Component {
           value={this.state.value}
           onChange={this.onChange}
         />
-        <button onClick={(e) => this.getTexto(e)}>Agregar</button>
+        <button id='agregarArticulo' className='d-none' data-richtext='' onClick={(e) => this.getTexto(e)}>Agregar</button>
       </div>
     );
   }

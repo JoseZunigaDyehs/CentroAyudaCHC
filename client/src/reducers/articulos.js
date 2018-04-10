@@ -36,3 +36,18 @@ export const articulo = (state = null, action) => {
       return state;
   }
 }
+
+export const imagenes = (state = [], action) => {
+  var nuevoEstado = Object.assign({}, state);
+  switch (action.type) {
+    case 'GET_IMAGENES':
+      return state;  
+    case 'ADD_IMAGEN':
+      nuevoEstado = state.concat(action.data);
+      return nuevoEstado;  
+    case 'CLEAR_IMAGENES':
+      return [];  
+    default:
+      return state;
+  }
+}
